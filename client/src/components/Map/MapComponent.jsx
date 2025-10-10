@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, ScaleControl, Rectangle, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Custom hook for rectangle drawing
-const useRectangleDrawer = (onAreaSelect, onDrawingStart, selectedArea) => {
+// Custom hook for rectangle drawing - MOVE THIS ABOVE MapComponent
+const useRectangleDrawer = (onAreaSelect, onDrawingStart, selectedArea, onAnalysisComplete) => { // Add onAnalysisComplete here
   const [startPoint, setStartPoint] = useState(null);
   const [endPoint, setEndPoint] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -66,6 +66,11 @@ const useRectangleDrawer = (onAreaSelect, onDrawingStart, selectedArea) => {
               console.log('🎯 Suitability Score:', data.analysis.overallScore);
               console.log('🏆 Priority Level:', data.analysis.priorityLevel);
               console.log('🌍 Impact Projection:', data.impact);
+              
+              // Pass results back to parent component
+              if (onAnalysisComplete) {
+                onAnalysisComplete(data);
+              }
             } else {
               console.error('❌ Analysis failed:', data.error);
             }
@@ -92,8 +97,13 @@ const useRectangleDrawer = (onAreaSelect, onDrawingStart, selectedArea) => {
 };
 
 // Rectangle drawing component
-const RectangleDrawer = ({ onAreaSelect, onDrawingStart, selectedArea }) => {
-  const { startPoint, endPoint, isDrawing } = useRectangleDrawer(onAreaSelect, onDrawingStart, selectedArea);
+const RectangleDrawer = ({ onAreaSelect, onDrawingStart, selectedArea, onAnalysisComplete }) => { // Add prop here
+  const { startPoint, endPoint, isDrawing } = useRectangleDrawer(
+    onAreaSelect, 
+    onDrawingStart, 
+    selectedArea, 
+    onAnalysisComplete // Pass it to the hook
+  );
 
   // Show temporary rectangle while drawing
   if (isDrawing && startPoint && endPoint) {
@@ -135,7 +145,8 @@ const RectangleDrawer = ({ onAreaSelect, onDrawingStart, selectedArea }) => {
   return null;
 };
 
-const MapComponent = ({ onAreaSelect, onDrawingStart, selectedArea }) => {
+// Main MapComponent
+const MapComponent = ({ onAreaSelect, onDrawingStart, selectedArea, onAnalysisComplete }) => {
   const center = [40.7128, -74.006];
 
   return (
@@ -156,6 +167,7 @@ const MapComponent = ({ onAreaSelect, onDrawingStart, selectedArea }) => {
           onAreaSelect={onAreaSelect} 
           onDrawingStart={onDrawingStart}
           selectedArea={selectedArea}
+          onAnalysisComplete={onAnalysisComplete}
         />
       </MapContainer>
 

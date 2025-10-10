@@ -99,7 +99,7 @@ class SuitabilityAnalyzer {
   
   getPriorityLevel(score) {
     if (score >= 0.7) return 'HIGH';
-    if (score >= 0.5) return 'MEDIUM';
+    if (score >= 0.5) return 'MEDIUM'; 
     if (score >= 0.3) return 'LOW';
     return 'VERY_LOW';
   }
