@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, ScaleControl, Rectangle, useMapEvents, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, ScaleControl, Rectangle, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 // Custom hook for rectangle drawing
@@ -8,30 +8,14 @@ const useRectangleDrawer = (onAreaSelect, onDrawingStart, selectedArea) => {
   const [endPoint, setEndPoint] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
 
-  const map = useMap();
-
   // Clear drawing when selection is cleared from parent
   useEffect(() => {
     if (!selectedArea) {
       setStartPoint(null);
       setEndPoint(null);
       setIsDrawing(false);
-      
-      // Remove any existing rectangles from the map
-      map.eachLayer((layer) => {
-        // Check if layer is a Rectangle by its feature instead of using L.Rectangle
-        // eslint-disable-next-line no-unsafe-optional-chaining
-        if (layer instanceof map.options.layers?.constructor || 
-            layer?.feature?.type === 'Rectangle' ||
-            layer?.options?.className === 'leaflet-interactive') {
-          // More specific check - look for rectangles by their style or properties
-          if (layer.options?.color === '#10b981' || layer.options?.fillColor === '#d1fae5') {
-            map.removeLayer(layer);
-          }
-        }
-      });
     }
-  }, [selectedArea, map]);
+  }, [selectedArea]);
 
   useMapEvents({
     click: (e) => {
@@ -61,9 +45,38 @@ const useRectangleDrawer = (onAreaSelect, onDrawingStart, selectedArea) => {
           bounds: bounds
         };
         
+        console.log('🗺️ Area selected in MapComponent:', coordinates);
+        
+        // Send to backend with better logging
+        console.log('📡 Sending analysis request to backend...');
+        fetch('/api/analyze', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ coordinates }),
+        })
+          .then(response => {
+            console.log('✅ Received response from backend, status:', response.status);
+            return response.json();
+          })
+          .then(data => {
+            console.log('📊 Analysis results:', data);
+            if (data.success) {
+              console.log('🎯 Suitability Score:', data.analysis.overallScore);
+              console.log('🏆 Priority Level:', data.analysis.priorityLevel);
+              console.log('🌍 Impact Projection:', data.impact);
+            } else {
+              console.error('❌ Analysis failed:', data.error);
+            }
+          })
+          .catch(error => {
+            console.error('💥 Network error:', error);
+          });
+        
         onAreaSelect(coordinates);
         
-        // Reset drawing state (keep the final rectangle visible)
+        // Reset drawing state
         setStartPoint(null);
         setEndPoint(null);
       }
