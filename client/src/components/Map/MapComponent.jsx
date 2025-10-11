@@ -176,8 +176,12 @@ const MapComponent = ({ onAreaSelect, onDrawingStart, selectedArea, onAnalysisCo
         <div className="selection-info">
           <h3>✅ Area Selected</h3>
           <p><strong>Center:</strong> {selectedArea.center.lat.toFixed(4)}, {selectedArea.center.lng.toFixed(4)}</p>
-          <button className="clear-btn-small" onClick={() => onAreaSelect(null)}>
-            × Clear
+          <button className="clear-btn-small" onClick={() => {
+            // Only clear the selection, don't trigger full analysis reset
+            console.log('🗑️ Clearing selection from map');
+            onAreaSelect(null);
+          }}>
+            Clear Selection
           </button>
         </div>
       )}

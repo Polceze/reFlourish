@@ -6,12 +6,23 @@ function App() {
   const [isDrawing, setIsDrawing] = useState(false);
   const [analysisResults, setAnalysisResults] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAreaSelect = (coordinates) => {
-    setSelectedArea(coordinates);
-    setIsDrawing(false);
-    setAnalysisResults(null); // Clear previous results
-    setIsLoading(true);
+    if (coordinates === null) {
+      // Clear selection only - keep instructions visible
+      console.log('🧹 Clearing selection, keeping instructions');
+      setSelectedArea(null);
+      setAnalysisResults(null);
+      setIsLoading(false);
+      // Don't reset isDrawing - let instructions stay visible
+    } else {
+      // New area selected - start analysis
+      setSelectedArea(coordinates);
+      setIsDrawing(false);
+      setAnalysisResults(null);
+      setIsLoading(true);
+    }
   };
 
   const handleDrawingStart = () => {
@@ -124,7 +135,7 @@ function App() {
                 <span className="mini-icon">💡</span>
                 <span>Draw a new area to analyze another location</span>
                 <button className="mini-clear-btn" onClick={handleClearSelection}>
-                  Start Over
+                  Clear Selection
                 </button>
               </div>
             </div>
@@ -135,13 +146,32 @@ function App() {
               <div className="card-header">
                 <div className="card-icon">📊</div>
                 <h3>Analysis Results</h3>
-                <button className="clear-btn" onClick={handleClearSelection}>
+                {/* <button className="clear-btn" onClick={handleClearSelection}>
                   Clear
-                </button>
+                </button> */}
               </div>
               
               <div className="analysis-content">
-                {/* Greening Potential Score */}
+                {/* Selected Area Coordinates */}
+                <div className="coordinate-section">
+                  <h4>Selected Area</h4>
+                  <div className="coordinate-grid">
+                    <div className="coord-item">
+                      <label>Latitude</label>
+                      <span>{analysisResults.area.center.lat.toFixed(4)}</span>
+                    </div>
+                    <div className="coord-item">
+                      <label>Longitude</label>
+                      <span>{analysisResults.area.center.lng.toFixed(4)}</span>
+                    </div>
+                  </div>
+                  <div className="coord-item">
+                    <label>Area Size</label>
+                    <span>{analysisResults.analysis.areaSize.toFixed(2)} km²</span>
+                  </div>
+                </div>
+
+                {/* Greening Potential Score - Condensed */}
                 <div className="score-section">
                   <h4>Greening Potential</h4>
                   <div className="score-display">
@@ -162,102 +192,11 @@ function App() {
                   </div>
                 </div>
 
-                {/* Environmental Factors */}
-                <div className="factors-section">
-                  <h4>Environmental Factors</h4>
-                  <div className="factors-grid">
-                    <div className="factor-item">
-                      <span className="factor-label">Vegetation</span>
-                      <div className="factor-bar">
-                        <div 
-                          className="factor-fill" 
-                          style={{ width: `${analysisResults.analysis.detailedScores[0].factors.vegetation * 100}%` }}
-                        ></div>
-                      </div>
-                      <span className="factor-value">
-                        {(analysisResults.analysis.detailedScores[0].factors.vegetation * 100).toFixed(0)}%
-                      </span>
-                    </div>
-                    <div className="factor-item">
-                      <span className="factor-label">Soil Quality</span>
-                      <div className="factor-bar">
-                        <div 
-                          className="factor-fill" 
-                          style={{ width: `${analysisResults.analysis.detailedScores[0].factors.soil * 100}%` }}
-                        ></div>
-                      </div>
-                      <span className="factor-value">
-                        {(analysisResults.analysis.detailedScores[0].factors.soil * 100).toFixed(0)}%
-                      </span>
-                    </div>
-                    <div className="factor-item">
-                      <span className="factor-label">Rainfall</span>
-                      <div className="factor-bar">
-                        <div 
-                          className="factor-fill" 
-                          style={{ width: `${analysisResults.analysis.detailedScores[0].factors.rainfall * 100}%` }}
-                        ></div>
-                      </div>
-                      <span className="factor-value">
-                        {(analysisResults.analysis.detailedScores[0].factors.rainfall * 100).toFixed(0)}%
-                      </span>
-                    </div>
-                    <div className="factor-item">
-                      <span className="factor-label">Biodiversity</span>
-                      <div className="factor-bar">
-                        <div 
-                          className="factor-fill" 
-                          style={{ width: `${analysisResults.analysis.detailedScores[0].factors.biodiversity * 100}%` }}
-                        ></div>
-                      </div>
-                      <span className="factor-value">
-                        {(analysisResults.analysis.detailedScores[0].factors.biodiversity * 100).toFixed(0)}%
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Impact Projection */}
-                <div className="impact-section">
-                  <h4>Potential Impact</h4>
-                  <div className="impact-grid">
-                    <div className="impact-item">
-                      <span className="impact-icon">🌿</span>
-                      <div className="impact-info">
-                        <span className="impact-value">
-                          {analysisResults.impact.co2Sequestration.toFixed(0)} tons
-                        </span>
-                        <span className="impact-label">CO₂ Sequestration / year</span>
-                      </div>
-                    </div>
-                    <div className="impact-item">
-                      <span className="impact-icon">🦋</span>
-                      <div className="impact-info">
-                        <span className="impact-value">
-                          {analysisResults.impact.biodiversityGain.toFixed(1)}
-                        </span>
-                        <span className="impact-label">Biodiversity Index Gain</span>
-                      </div>
-                    </div>
-                    <div className="impact-item">
-                      <span className="impact-icon">💧</span>
-                      <div className="impact-info">
-                        <span className="impact-value">
-                          {analysisResults.impact.waterRetention.toFixed(0)} m³
-                        </span>
-                        <span className="impact-label">Water Retention / year</span>
-                      </div>
-                    </div>
-                    <div className="impact-item">
-                      <span className="impact-icon">🌱</span>
-                      <div className="impact-info">
-                        <span className="impact-value">
-                          {analysisResults.impact.soilPreservation.toFixed(0)} tons
-                        </span>
-                        <span className="impact-label">Soil Preservation / year</span>
-                      </div>
-                    </div>
-                  </div>
+                {/* View Details Button */}
+                <div className="details-action">
+                  <button className="details-btn" onClick={() => setIsModalOpen(true)}>
+                    📈 View Detailed Analysis
+                  </button>
                 </div>
               </div>
             </div>
@@ -306,6 +245,182 @@ function App() {
           onAnalysisComplete={handleAnalysisComplete}
         />
       </div>
+      {/* Detailed Analysis Modal */}
+      {isModalOpen && analysisResults && (
+        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Detailed Analysis</h2>
+              <button className="modal-close" onClick={() => setIsModalOpen(false)}>
+                ×
+              </button>
+            </div>
+            
+            <div className="modal-body">
+              {/* Environmental Factors */}
+              <div className="modal-section">
+                <h3>Environmental Factors</h3>
+                <div className="factors-grid-detailed">
+                  <div className="factor-item-detailed">
+                    <div className="factor-header">
+                      <span className="factor-label-detailed">Vegetation Health</span>
+                      <span className="factor-value-detailed">
+                        {(analysisResults.analysis.detailedScores[0].factors.vegetation * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                    <div className="factor-bar-detailed">
+                      <div 
+                        className="factor-fill-detailed" 
+                        style={{ width: `${analysisResults.analysis.detailedScores[0].factors.vegetation * 100}%` }}
+                      ></div>
+                    </div>
+                    <p className="factor-description">
+                      Current vegetation density and health indicators
+                    </p>
+                  </div>
+                  
+                  <div className="factor-item-detailed">
+                    <div className="factor-header">
+                      <span className="factor-label-detailed">Soil Quality</span>
+                      <span className="factor-value-detailed">
+                        {(analysisResults.analysis.detailedScores[0].factors.soil * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                    <div className="factor-bar-detailed">
+                      <div 
+                        className="factor-fill-detailed" 
+                        style={{ width: `${analysisResults.analysis.detailedScores[0].factors.soil * 100}%` }}
+                      ></div>
+                    </div>
+                    <p className="factor-description">
+                      Soil composition and nutrient availability
+                    </p>
+                  </div>
+                  
+                  <div className="factor-item-detailed">
+                    <div className="factor-header">
+                      <span className="factor-label-detailed">Rainfall Pattern</span>
+                      <span className="factor-value-detailed">
+                        {(analysisResults.analysis.detailedScores[0].factors.rainfall * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                    <div className="factor-bar-detailed">
+                      <div 
+                        className="factor-fill-detailed" 
+                        style={{ width: `${analysisResults.analysis.detailedScores[0].factors.rainfall * 100}%` }}
+                      ></div>
+                    </div>
+                    <p className="factor-description">
+                      Historical precipitation and water availability
+                    </p>
+                  </div>
+                  
+                  <div className="factor-item-detailed">
+                    <div className="factor-header">
+                      <span className="factor-label-detailed">Biodiversity Index</span>
+                      <span className="factor-value-detailed">
+                        {(analysisResults.analysis.detailedScores[0].factors.biodiversity * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                    <div className="factor-bar-detailed">
+                      <div 
+                        className="factor-fill-detailed" 
+                        style={{ width: `${analysisResults.analysis.detailedScores[0].factors.biodiversity * 100}%` }}
+                      ></div>
+                    </div>
+                    <p className="factor-description">
+                      Species diversity and ecosystem complexity
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Impact Projection */}
+              <div className="modal-section">
+                <h3>Potential Annual Impact</h3>
+                <div className="impact-grid-detailed">
+                  <div className="impact-item-detailed">
+                    <div className="impact-icon-detailed">🌿</div>
+                    <div className="impact-content-detailed">
+                      <div className="impact-value-detailed">
+                        {analysisResults.impact.co2Sequestration.toFixed(0)} tons
+                      </div>
+                      <div className="impact-label-detailed">CO₂ Sequestration</div>
+                      <div className="impact-description">
+                        Equivalent to taking {(analysisResults.impact.co2Sequestration / 4.6).toFixed(0)} cars off the road annually
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="impact-item-detailed">
+                    <div className="impact-icon-detailed">💧</div>
+                    <div className="impact-content-detailed">
+                      <div className="impact-value-detailed">
+                        {analysisResults.impact.waterRetention.toFixed(0)} m³
+                      </div>
+                      <div className="impact-label-detailed">Water Retention</div>
+                      <div className="impact-description">
+                        Enough to supply {(analysisResults.impact.waterRetention / 54750).toFixed(0)} households for a year
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="impact-item-detailed">
+                    <div className="impact-icon-detailed">🦋</div>
+                    <div className="impact-content-detailed">
+                      <div className="impact-value-detailed">
+                        {analysisResults.impact.biodiversityGain.toFixed(1)}
+                      </div>
+                      <div className="impact-label-detailed">Biodiversity Gain</div>
+                      <div className="impact-description">
+                        Significant improvement in species richness and ecosystem resilience
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="impact-item-detailed">
+                    <div className="impact-icon-detailed">🌱</div>
+                    <div className="impact-content-detailed">
+                      <div className="impact-value-detailed">
+                        {analysisResults.impact.soilPreservation.toFixed(0)} tons
+                      </div>
+                      <div className="impact-label-detailed">Soil Preservation</div>
+                      <div className="impact-description">
+                        Prevention of erosion and improvement of soil fertility
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Data Sources */}
+              <div className="modal-section">
+                <h3>Data Sources & Methodology</h3>
+                <div className="data-sources">
+                  <div className="data-source-item">
+                    <strong>Rainfall Data:</strong> Open-Meteo Historical Weather API
+                  </div>
+                  <div className="data-source-item">
+                    <strong>Elevation Data:</strong> Open-Meteo Elevation API
+                  </div>
+                  <div className="data-source-item">
+                    <strong>Vegetation & Soil:</strong> Enhanced simulation based on geographical patterns
+                  </div>
+                  <div className="data-source-item">
+                    <strong>Impact Calculations:</strong> Based on peer-reviewed ecological models
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="modal-footer">
+              <button className="modal-action-btn" onClick={() => setIsModalOpen(false)}>
+                Close Detailed View
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
