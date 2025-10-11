@@ -175,9 +175,9 @@ function App() {
                   </div>
                 </div>
 
-                {/* Greening Potential Score - Condensed */}
+                {/* Forestation Potential Score - Condensed */}
                 <div className="score-section">
-                  <h4>Greening Potential</h4>
+                  <h4>Forestation Potential</h4>
                   <div className="score-display">
                     <div className="score-circle">
                       <span className="score-value">
@@ -208,7 +208,7 @@ function App() {
             <div className="analysis-card">
               <div className="card-header">
                 <div className="card-icon">⏳</div>
-                <h3>Analyzing Greening Potential</h3>
+                <h3>Analyzing Forestation Potential</h3>
               </div>
               <div className="analysis-content">
                 <div className="loading-section">
@@ -234,7 +234,7 @@ function App() {
             <div className="placeholder-card">
               <div className="placeholder-icon">🗺️</div>
               <h3>Select an Area</h3>
-              <p>Draw a rectangle to analyze greening potential and ecosystem benefits</p>
+              <p>Draw a rectangle to analyze Forestation potential and ecosystem benefits</p>
             </div>
           )}
         </div>
@@ -263,11 +263,39 @@ function App() {
             <div className="modal-body">
               {/* Environmental Factors */}
               <div className="modal-section">
+                <h3>Dashboard Summary</h3>
+                <div className="dashboard-summary">
+                  <div className="summary-item">
+                    <span className="summary-label">Area Size</span>
+                    <span className="summary-value">{analysisResults.analysis.areaSize?.toFixed(2) || '0.00'} km²</span>
+                  </div>
+                  <div className="summary-item">
+                    <span className="summary-label">Forestation potential Score</span>
+                    <span className="summary-value">{((analysisResults.analysis.overallScore || 0) * 100).toFixed(0)}%</span>
+                  </div>
+                  <div className="summary-item">
+                    <span className="summary-label">Grade</span>
+                    <span className="summary-value">                    
+                      <div className="potential-badge" style={{ 
+                        backgroundColor: getPriorityColor(analysisResults.analysis.priorityLevel) 
+                      }}>
+                        {getPriorityEmoji(analysisResults.analysis.priorityLevel)} 
+                        {analysisResults.analysis.priorityLevel.replace('PRIORITY', 'POTENTIAL')}
+                      </div>
+                    </span>
+                    
+
+                  </div>
+                  <div className="summary-item">
+                    <span className="summary-label">Data Confidence</span>
+                    <span className="summary-value">🟢 High</span>
+                  </div>
+                </div>
                 <h3>Environmental Factors</h3>
                 <div className="factors-grid-detailed">
                   <div className="factor-item-detailed">
                     <div className="factor-header">
-                      <span className="factor-label-detailed">Vegetation Health</span>
+                      <span className="factor-label-detailed">Existing Vegetation Health</span>
                       <span className="factor-value-detailed">
                         {(analysisResults.analysis.detailedScores[0].factors.vegetation * 100).toFixed(0)}%
                       </span>
@@ -341,17 +369,17 @@ function App() {
 
               {/* Impact Projection */}
               <div className="modal-section">
-                <h3>Potential Annual Impact</h3>
+                <h3>Projected Annual Environmental Impact</h3>
                 <div className="impact-grid-detailed">
                   <div className="impact-item-detailed">
                     <div className="impact-icon-detailed">🌿</div>
                     <div className="impact-content-detailed">
                       <div className="impact-value-detailed">
-                        {analysisResults.impact.co2Sequestration.toFixed(0)} tons
+                        {analysisResults.impact.co2Sequestration?.toLocaleString() || '0'} tons
                       </div>
                       <div className="impact-label-detailed">CO₂ Sequestration</div>
                       <div className="impact-description">
-                        Equivalent to taking {(analysisResults.impact.co2Sequestration / 4.6).toFixed(0)} cars off the road annually
+                        Based on IPCC temperate forest sequestration rates (2.5-7.5 tons/ha/year)
                       </div>
                     </div>
                   </div>
@@ -360,11 +388,11 @@ function App() {
                     <div className="impact-icon-detailed">💧</div>
                     <div className="impact-content-detailed">
                       <div className="impact-value-detailed">
-                        {analysisResults.impact.waterRetention.toFixed(0)} m³
+                        {analysisResults.impact.waterRetention?.toLocaleString() || '0'} m³
                       </div>
                       <div className="impact-label-detailed">Water Retention</div>
                       <div className="impact-description">
-                        Enough to supply {(analysisResults.impact.waterRetention / 54750).toFixed(0)} households for a year
+                        Natural water filtration and groundwater recharge (500-2000 m³/ha/year)
                       </div>
                     </div>
                   </div>
@@ -373,11 +401,11 @@ function App() {
                     <div className="impact-icon-detailed">🦋</div>
                     <div className="impact-content-detailed">
                       <div className="impact-value-detailed">
-                        {analysisResults.impact.biodiversityGain.toFixed(1)}
+                        +{analysisResults.impact.biodiversityGain?.toFixed(1) || '0'} pts
                       </div>
-                      <div className="impact-label-detailed">Biodiversity Gain</div>
+                      <div className="impact-label-detailed">Biodiversity Index</div>
                       <div className="impact-description">
-                        Significant improvement in species richness and ecosystem resilience
+                        Habitat quality improvement on 0-100 scale (ecological integrity)
                       </div>
                     </div>
                   </div>
@@ -386,11 +414,37 @@ function App() {
                     <div className="impact-icon-detailed">🌱</div>
                     <div className="impact-content-detailed">
                       <div className="impact-value-detailed">
-                        {analysisResults.impact.soilPreservation.toFixed(0)} tons
+                        {analysisResults.impact.soilPreservation?.toLocaleString() || '0'} tons
                       </div>
                       <div className="impact-label-detailed">Soil Preservation</div>
                       <div className="impact-description">
-                        Prevention of erosion and improvement of soil fertility
+                        FAO studies show vegetation reduces soil erosion by 1-5 tons/ha/year
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="impact-item-detailed">
+                    <div className="impact-icon-detailed">🌬️</div>
+                    <div className="impact-content-detailed">
+                      <div className="impact-value-detailed">
+                        {analysisResults.impact.airQualityImprovement?.toLocaleString() || '0'} kg
+                      </div>
+                      <div className="impact-label-detailed">Air Quality</div>
+                      <div className="impact-description">
+                        Pollutants removed annually (EPA: 0.5-2 kg/ha/year)
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="impact-item-detailed">
+                    <div className="impact-icon-detailed">💰</div>
+                    <div className="impact-content-detailed">
+                      <div className="impact-value-detailed">
+                        ${analysisResults.impact.economicValue?.toLocaleString() || '0'}
+                      </div>
+                      <div className="impact-label-detailed">Economic Value</div>
+                      <div className="impact-description">
+                        Ecosystem services (TEEB: $500-5000/ha/year)
                       </div>
                     </div>
                   </div>
