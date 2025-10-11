@@ -934,3 +934,20 @@ html, body, #root {
 .modal-action-btn:hover {
   background: #4b5563;
 }
+
+/* Real data indicators */
+.data-source-item.real-data {
+  background: #f0f9ff;
+  border-left: 4px solid #0ea5e9;
+  color: #0369a1;
+}
+
+.data-credibility-note {
+  margin-top: 12px;
+  padding: 12px;
+  background: #f0fdf4;
+  border-radius: 6px;
+  border: 1px solid #d1fae5;
+  color: #065f46;
+  font-size: 14px;
+}

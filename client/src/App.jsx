@@ -169,6 +169,10 @@ function App() {
                     <label>Area Size</label>
                     <span>{analysisResults.analysis.areaSize.toFixed(2)} km²</span>
                   </div>
+                  <div className="coord-item">
+                    <label>Data Sources</label>
+                    <span style={{color: '#10b981', fontWeight: '600'}}>Real Satellite + Weather</span>
+                  </div>
                 </div>
 
                 {/* Greening Potential Score - Condensed */}
@@ -397,18 +401,24 @@ function App() {
               <div className="modal-section">
                 <h3>Data Sources & Methodology</h3>
                 <div className="data-sources">
-                  <div className="data-source-item">
+                  <div className="data-source-item real-data">
+                    <strong>Vegetation Health:</strong> OpenEO + Sentinel-2 Satellite Imagery
+                  </div>
+                  <div className="data-source-item real-data">
+                    <strong>Soil Quality:</strong> OpenEO Land Cover Classification
+                  </div>
+                  <div className="data-source-item real-data">
                     <strong>Rainfall Data:</strong> Open-Meteo Historical Weather API
                   </div>
-                  <div className="data-source-item">
-                    <strong>Elevation Data:</strong> Open-Meteo Elevation API
+                  <div className="data-source-item real-data">
+                    <strong>Biodiversity:</strong> OpenEO Habitat Heterogeneity Analysis
                   </div>
                   <div className="data-source-item">
-                    <strong>Vegetation & Soil:</strong> Enhanced simulation based on geographical patterns
+                    <strong>Impact Calculations:</strong> Peer-reviewed ecological models
                   </div>
-                  <div className="data-source-item">
-                    <strong>Impact Calculations:</strong> Based on peer-reviewed ecological models
-                  </div>
+                </div>
+                <div className="data-credibility-note">
+                  ✅ <strong>Real Satellite & Weather Data:</strong> This analysis uses current environmental data from open-source APIs
                 </div>
               </div>
             </div>

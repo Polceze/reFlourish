@@ -61,10 +61,11 @@ const useRectangleDrawer = (onAreaSelect, onDrawingStart, selectedArea, onAnalys
             return response.json();
           })
           .then(data => {
+            console.log('📊 FULL Analysis results:', JSON.stringify(data, null, 2)); // Add this line
             console.log('📊 Analysis results:', data);
             if (data.success) {
-              console.log('🎯 Suitability Score:', data.analysis.overallScore);
-              console.log('🏆 Priority Level:', data.analysis.priorityLevel);
+              console.log('🎯 Suitability Score:', data.analysis?.overallScore);
+              console.log('🏆 Priority Level:', data.analysis?.priorityLevel);
               console.log('🌍 Impact Projection:', data.impact);
               
               // Pass results back to parent component
