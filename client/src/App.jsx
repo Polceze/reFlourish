@@ -16,6 +16,8 @@ function App() {
   const isMobile = window.innerWidth <= 1024;
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
+  const API_BASE = 'https://reflourish-backend.onrender.com';
+
   const { user, token, logout } = useAuth();
 
   // Detect touch device
@@ -101,7 +103,7 @@ function App() {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/analyses`, {
+      const response = await fetch(`${API_BASE}/api/analyses`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -7,6 +7,7 @@ const useRectangleDrawer = (onAreaSelect, onDrawingStart, selectedArea, onAnalys
   const [startPoint, setStartPoint] = useState(null);
   const [endPoint, setEndPoint] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
+  const API_BASE = 'https://reflourish-backend.onrender.com';
 
   // Clear drawing when selection is cleared from parent
   useEffect(() => {
@@ -49,7 +50,7 @@ const useRectangleDrawer = (onAreaSelect, onDrawingStart, selectedArea, onAnalys
         
         // Send to backend with better logging
         console.log('📡 Sending analysis request to backend...');
-        fetch(`${import.meta.env.VITE_API_URL}/api/analyze`, {
+        fetch(`${API_BASE}/api/analyze`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

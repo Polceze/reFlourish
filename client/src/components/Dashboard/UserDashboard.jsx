@@ -6,11 +6,12 @@ const UserDashboard = ({ isOpen, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [selectedAnalysis, setSelectedAnalysis] = useState(null);
   const { user, token } = useAuth();
+  const API_BASE = 'https://reflourish-backend.onrender.com';
 
     // Move fetchAnalysisHistory inside useCallback
   const fetchAnalysisHistory = useCallback(async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/analyses/history`, {
+      const response = await fetch(`${API_BASE}/api/analyses/history`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
