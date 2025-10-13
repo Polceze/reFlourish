@@ -58,6 +58,7 @@ const Login = ({ onSwitchToRegister, onClose }) => {
             onChange={handleChange}
             required
             placeholder="Enter your email"
+            autoComplete="email"
           />
         </div>
 
@@ -71,6 +72,7 @@ const Login = ({ onSwitchToRegister, onClose }) => {
             onChange={handleChange}
             required
             placeholder="Enter your password"
+            autoComplete="current-password"
           />
         </div>
 

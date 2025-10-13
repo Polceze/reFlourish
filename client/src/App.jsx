@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MapComponent from './components/Map/MapComponent';
 import AuthModal from './components/Auth/AuthModal';
 import UserDashboard from './components/Dashboard/UserDashboard';
@@ -11,10 +11,28 @@ function App() {
   const [analysisResults, setAnalysisResults] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDashboardOpen, setIsDashboardOpen] = useState(false);
+  const [isDashboardOpen, setIsDashboardOpen] = useState(false);  
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const isMobile = window.innerWidth <= 1024;
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
   const { user, token, logout } = useAuth();
 
-  // const { user, logout } = useAuth();
+  // Detect touch device
+  useEffect(() => {
+    const checkTouchDevice = () => {
+      // Check if the device supports touch events
+      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      setIsTouchDevice(isTouch);
+    };
+
+    checkTouchDevice();
+    
+    // Optional: Re-check on resize in case of device rotation
+    window.addEventListener('resize', checkTouchDevice);
+    return () => window.removeEventListener('resize', checkTouchDevice);
+  }, []);
+
 
   const handleAreaSelect = (coordinates) => {
     if (coordinates === null) {
@@ -35,6 +53,10 @@ function App() {
 
   const handleDrawingStart = () => {
     setIsDrawing(true);
+  };
+
+  const handleOverlayClick = () => {
+    setIsMobileSidebarOpen(false);
   };
 
   const handleClearSelection = () => {
@@ -120,8 +142,22 @@ function App() {
   return (
     <ProtectedRoute>
       <div className="app">
+        {/* Hamburger Menu for Mobile */}
+        {isMobile && (
+          <>
+            <div className="hamburger-menu" onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div 
+              className={`sidebar-overlay ${isMobileSidebarOpen ? 'active' : ''}`}
+              onClick={handleOverlayClick}
+            ></div>
+          </>
+        )}
         {/* Sidebar */}
-        <div className="sidebar">
+        <div className={`sidebar ${isMobile && isMobileSidebarOpen ? 'mobile-open' : ''}`}>
           {/* Header */}
           <div className="sidebar-header">
             <div className="header-content">
@@ -133,7 +169,7 @@ function App() {
                 <p className="subtitle">Ecosystem Restoration Platform</p>
               </div>
             </div>
-            <span className="user-greeting">Hello, {user.username}</span>
+            <span className="user-greeting">Hello, {user?.username || 'Guest'}</span>
             <div className="auth-buttons">
                 {user ? (
                   <div className="user-menu">
@@ -170,29 +206,62 @@ function App() {
                 </div>
                 
                 <div className="steps-container">
-                  <div className="step-item">
-                    <div className="step-number">1</div>
-                    <div className="step-content">
-                      <strong>Start Drawing</strong>
-                      <p>Click anywhere on the map to begin</p>
-                    </div>
-                  </div>
-                  
-                  <div className="step-item">
-                    <div className="step-number">2</div>
-                    <div className="step-content">
-                      <strong>Adjust Size</strong>
-                      <p>Move your mouse to resize the rectangle</p>
-                    </div>
-                  </div>
-                  
-                  <div className="step-item">
-                    <div className="step-number">3</div>
-                    <div className="step-content">
-                      <strong>Complete Selection</strong>
-                      <p>Click again to finalize the area</p>
-                    </div>
-                  </div>
+                  {/* Dynamic steps based on device type */}
+                  {isTouchDevice ? (
+                    // Touch device instructions
+                    <>
+                      <div className="step-item">
+                        <div className="step-number">1</div>
+                        <div className="step-content">
+                          <strong>Start Selection</strong>
+                          <p>Tap anywhere on the map to set the first corner</p>
+                        </div>
+                      </div>
+                      
+                      <div className="step-item">
+                        <div className="step-number">2</div>
+                        <div className="step-content">
+                          <strong>Set Opposite Corner</strong>
+                          <p>Tap another location to set the opposite corner</p>
+                        </div>
+                      </div>
+                      
+                      <div className="step-item">
+                        <div className="step-number">3</div>
+                        <div className="step-content">
+                          <strong>Analyze Area</strong>
+                          <p>The rectangle will form and analysis will begin automatically</p>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    // Desktop instructions (your existing ones)
+                    <>
+                      <div className="step-item">
+                        <div className="step-number">1</div>
+                        <div className="step-content">
+                          <strong>Start Drawing</strong>
+                          <p>Click anywhere on the map to begin</p>
+                        </div>
+                      </div>
+                      
+                      <div className="step-item">
+                        <div className="step-number">2</div>
+                        <div className="step-content">
+                          <strong>Adjust Size</strong>
+                          <p>Move your mouse to resize the rectangle</p>
+                        </div>
+                      </div>
+                      
+                      <div className="step-item">
+                        <div className="step-number">3</div>
+                        <div className="step-content">
+                          <strong>Complete Selection</strong>
+                          <p>Click again to finalize the area</p>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 {/* Status Indicator */}
@@ -200,7 +269,8 @@ function App() {
                   <div className="status-dot"></div>
                   <span>
                     {isLoading ? '🔍 Analyzing...' : 
-                    isDrawing ? 'Drawing in progress...' : 'Ready to draw'}
+                    isDrawing ? (isTouchDevice ? 'Tap to set second point...' : 'Drawing in progress...') : 
+                    (isTouchDevice ? 'Ready to select area' : 'Ready to draw')}
                   </span>
                 </div>
               </div>

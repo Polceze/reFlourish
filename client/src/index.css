@@ -1010,7 +1010,11 @@ html, body, #root {
 }
 
 .auth-modal {
+  display: flex;
+  flex-direction: column;
   padding: 32px;
+  width: fit-content;
+  justify-self: center;
 }
 
 .auth-header {
@@ -1363,7 +1367,7 @@ html, body, #root {
 }
 
 .auth-required-screen {
-  height: 100vh;
+  height: 100%;
   background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
   display: flex;
   align-items: center;
@@ -1417,6 +1421,13 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+
+.demo-notice {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
 }
 
 .feature-card {
@@ -1474,4 +1485,484 @@ html, body, #root {
   color: #dc2626;
   font-size: 12px;
   margin-top: 8px;
+}
+
+/* ===== RESPONSIVE STYLES ===== */
+
+/* Mobile First Adjustments */
+@media (max-width: 1024px) {
+  .app {
+    position: relative;
+  }
+
+  /* Hamburger Menu Button */
+  .hamburger-menu {
+    position: fixed;
+    top: 8rem;
+    left: 10px;
+    width: 44px;
+    height: 44px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .auth-required-screen {
+    height: auto;
+  }
+
+  .auth-required-content {
+    max-width: 900px;
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 10rem;
+  }
+
+  .feature-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+  }
+
+  .welcome-header{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .auth-required-screen {
+    height: 100%vh;
+    min-height: 100vh;
+    padding: 20px 16px;
+    align-items: center;
+    overflow-y: auto;
+  }
+
+  .hamburger-menu span {
+    width: 20px;
+    height: 2px;
+    background: #374151;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger-menu.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+
+  .hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  /* Sidebar for Mobile */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 320px;
+    height: 100vh;
+    z-index: 1000;
+    transition: left 0.3s ease;
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .sidebar.mobile-open {
+    left: 0;
+  }
+
+  /* Overlay when sidebar is open */
+  .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+  }
+
+  /* Make sidebar content scrollable */
+  .sidebar-content {
+    overflow-y: auto;
+    max-height: calc(100vh - 120px);
+  }
+
+  /* Map container full width on mobile */
+  .map-container {
+    width: 100%;
+  }
+}
+
+/* Tablet Styles (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .sidebar.mobile-open {
+    width: 320px;
+  }
+}
+
+/* Mobile Styles (up to 768px) */
+@media (max-width: 768px) {
+  .sidebar.mobile-open {
+    width: 100%;
+    max-width: 380px;
+  }
+
+  /* Adjust sidebar header for mobile */
+  .sidebar-header {
+    padding: 16px;
+  }
+
+  .header-content {
+    gap: 10px;
+  }
+
+  .sidebar h1 {
+    font-size: 20px;
+  }
+
+  .sidebar .subtitle {
+    font-size: 13px;
+  }
+
+  .sidebar-content {
+    padding: 12px;
+  }
+
+  /* Adjust card sizes */
+  .instructions-card,
+  .analysis-card,
+  .placeholder-card {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .card-header {
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+  }
+
+  .card-header h3 {
+    font-size: 16px;
+  }
+
+  /* Responsive coordinate grid */
+  .coordinate-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .coord-item {
+    padding: 8px;
+    margin-bottom: 8px;
+  }
+
+  /* Adjust score display for mobile */
+  .score-display {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .score-circle {
+    width: 50px;
+    height: 50px;
+  }
+
+  .score-value {
+    font-size: 20px;
+  }
+
+  /* Stack user menu buttons on mobile */
+  .user-menu {
+    grid-template-rows: 1fr;
+    gap: 6px;
+  }
+
+  .user-greeting {
+    margin: 0.5rem 0;
+    text-align: center;
+  }
+}
+
+/* Small Mobile Styles (up to 480px) */
+@media (max-width: 480px) {
+  .hamburger-menu {
+    top: 12px;
+    left: 12px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .auth-required-content {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    padding: 20px;
+  }
+
+  .auth-required-screen {
+    height: 100%vh;
+    min-height: 100vh;
+    padding: 20px 16px;
+    align-items: center;
+    overflow-y: auto;
+  }
+
+  .sidebar.mobile-open {
+    max-width: 100%;
+  }
+
+  .sidebar-header {
+    padding: 14px;
+  }
+
+  .sidebar h1 {
+    font-size: 18px;
+  }
+
+  .logo {
+    padding: 6px;
+    font-size: 14px;
+  }
+
+  /* Adjust step items */
+  .step-item {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .step-number {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+
+  .step-content strong {
+    font-size: 13px;
+  }
+
+  .step-content p {
+    font-size: 12px;
+  }
+
+  /* Smaller font sizes for mobile */
+  .coord-item span {
+    font-size: 14px;
+  }
+
+  .coord-item label {
+    font-size: 13px;
+  }
+
+  .details-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .save-analysis-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+}
+
+/* ===== RESPONSIVE MODAL STYLES ===== */
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 10px;
+  }
+
+  .modal-content {
+    max-height: 95vh;
+    margin: 10px;
+  }
+
+  .modal-header {
+    padding: 20px;
+  }
+
+  .modal-header h2 {
+    font-size: 20px;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .modal-section {
+    margin-bottom: 24px;
+  }
+
+  .modal-section h3 {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* Responsive dashboard summary */
+  .dashboard-summary {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .summary-item {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .summary-label {
+    font-size: 14px;
+  }
+
+  .summary-value {
+    font-size: 14px;
+  }
+
+  /* Stack impact grid on mobile */
+  .impact-grid-detailed {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .impact-item-detailed {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .impact-icon-detailed {
+    font-size: 20px;
+  }
+
+  .impact-value-detailed {
+    font-size: 18px;
+  }
+
+  .impact-label-detailed {
+    font-size: 13px;
+  }
+
+  .impact-description {
+    font-size: 12px;
+  }
+
+  /* Adjust factors grid */
+  .factors-grid-detailed {
+    gap: 16px;
+  }
+
+  .factor-item-detailed {
+    padding: 12px;
+  }
+
+  .factor-label-detailed {
+    font-size: 14px;
+  }
+
+  .factor-value-detailed {
+    font-size: 14px;
+  }
+
+  .factor-description {
+    font-size: 13px;
+  }
+
+  /* Modal footer adjustments */
+  .modal-footer {
+    padding: 16px 20px;
+  }
+
+  .modal-action-btn {
+    width: 100%;
+    padding: 12px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+  .modal-content {
+    margin: 5px;
+  }
+
+  .modal-header,
+  .modal-body {
+    padding: 16px;
+  }
+
+  .impact-item-detailed {
+    padding: 12px;
+  }
+
+  .dashboard-summary {
+    padding: 10px;
+  }
+}
+
+/* Auth modal responsiveness */
+@media (max-width: 480px) {
+  .auth-content {
+    max-width: 100%;
+    margin: 10px;
+  }
+
+  .auth-modal {
+    padding: 24px;
+  }
+
+  .auth-header h2 {
+    font-size: 20px;
+  }
+
+  .auth-required-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 20px;
+  }
+
+  .auth-hero h1 {
+    font-size: 32px;
+  }
+
+  .auth-hero p {
+    font-size: 16px;
+  }
+}
+
+/* Ensure map controls are accessible on mobile */
+@media (max-width: 768px) {
+  .leaflet-control-zoom {
+    margin: 60px 10px 10px 10px !important;
+  }
+
+  .leaflet-top .leaflet-control {
+    margin-top: 60px;
+  }
+}
+
+/* Prevent horizontal scrolling */
+.app {
+  overflow-x: hidden;
+}
+
+/* Smooth transitions for better mobile experience */
+.sidebar,
+.modal-content,
+.hamburger-menu {
+  transition: all 0.3s ease;
 }

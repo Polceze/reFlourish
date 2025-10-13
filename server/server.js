@@ -356,7 +356,7 @@ const openEOAPI = {
   async getLandCoverData(lat, lng, buffer = 0.01) {
     try {
       // Mock land cover classification
-      // Real implementation would use OpenEO's land cover processes
+      // Given time, real implementation would use OpenEO's land cover processes
       const bbox = [lng - buffer, lat - buffer, lng + buffer, lat + buffer];
       
       // Simulate different land cover types
