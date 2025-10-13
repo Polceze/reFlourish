@@ -10,7 +10,7 @@ const UserDashboard = ({ isOpen, onClose }) => {
     // Move fetchAnalysisHistory inside useCallback
   const fetchAnalysisHistory = useCallback(async () => {
     try {
-      const response = await fetch('${import.meta.env.VITE_API_URL}/api/analyses/history', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/analyses/history`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

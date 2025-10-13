@@ -101,7 +101,7 @@ function App() {
     }
 
     try {
-      const response = await fetch('${import.meta.env.VITE_API_URL}/api/analyses', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/analyses`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

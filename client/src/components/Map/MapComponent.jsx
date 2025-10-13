@@ -49,7 +49,7 @@ const useRectangleDrawer = (onAreaSelect, onDrawingStart, selectedArea, onAnalys
         
         // Send to backend with better logging
         console.log('📡 Sending analysis request to backend...');
-        fetch('${import.meta.env.VITE_API_URL}/api/analyze', {
+        fetch(`${import.meta.env.VITE_API_URL}/api/analyze`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
