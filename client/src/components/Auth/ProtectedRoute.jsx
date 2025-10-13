@@ -83,7 +83,7 @@ const ProtectedRoute = ({ children }) => {
             </div>
             
             <div className="demo-notice">
-              <p>🌍 Join NGOs, researchers, and environmental organizations worldwide</p>
+              <p>Transform your ecosystem restoration with satellite-powered insights</p>
             </div>
           </div>
         </div>
