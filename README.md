@@ -10,30 +10,24 @@
 https://reflourish.netlify.app/
 
 ## 📖 Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [API Documentation](#api-documentation)
-- [Deployment](#deployment)
-- [Directory Structure](#directory-structure)
-- [Scientific Methodology](#scientific-methodology)
-- [Contributing](#contributing)
-- [License](#license)
+- [🎯 Overview](#overview)
+- [✨ Features](#features)
+- [🛠 Tech Stack](#tech-stack)
+- [🏗 Architecture](#architecture)
+- [📡 API Documentation](#api-documentation)
+- [📁 Directory Structure](#directory-structure)
+- [🔬 Scientific Methodology](#scientific-methodology)
+- [🤝 Contributing](#contributing)
+- [📄 License](#license)
 
-## 🎯 Overview
+<h2 id="overview">🎯 Overview</h2> 
 
 reFlourish is a comprehensive ecosystem restoration platform that enables users to analyze land suitability for reforestation and ecosystem restoration projects. The platform combines satellite imagery, environmental data, and scientific models to provide actionable insights for conservation efforts.
 
-### 🎥 Demo
-*Live demo and video links to be added*
-
 ### 🏆 Hackathon Context
-Built for environmental hackathons, reFlourish addresses the critical need for data-driven ecosystem restoration planning in the face of climate change and biodiversity loss.
+Built for Land Degradation hackathons, reFlourish addresses the critical need for data-driven ecosystem restoration planning in the face of climate change and biodiversity loss.
 
-## ✨ Features
+<h2 id="features">✨ Features</h2>
 
 ### 🌍 Core Functionality
 - **Interactive Map Analysis**: Draw rectangular areas on the map to analyze ecosystem restoration potential
@@ -60,7 +54,7 @@ Built for environmental hackathons, reFlourish addresses the critical need for d
 - Progressive Web App capabilities
 - Mobile-responsive design with touch gesture support
 
-## 🛠 Tech Stack
+<h2 id="tech-stack">🛠 Tech Stack</h2>
 
 ### Frontend
 - **React 19.1.1** - Modern UI framework with hooks
@@ -87,7 +81,7 @@ Built for environmental hackathons, reFlourish addresses the critical need for d
 - **Nodemon 3.1.10** - Development server auto-restart
 - **dotenv 17.2.3** - Environment variable management
 
-## 🏗 Architecture
+<h2 id="architecture">🏗 Architecture</h2>
 
 ### System Architecture
 Client (React/Vite) → Express API → MongoDB
@@ -130,7 +124,7 @@ Authenticated API Calls with Bearer Token
 - timestamp (auto-generated)
 - tags and isPublic for future features
 
-## 📡 API Documentation
+<h2 id="api-documentation">📡 API Documentation</h2>
 
 ### Authentication Endpoints
 #### POST `/api/auth/register`
@@ -290,7 +284,7 @@ Response:
 #### GET `/api/health`
 - Server health check.
 
-## 📁 Directory Structure
+<h2 id="directory-structure">📁 Directory Structure</h2>
 
 ```text
 reFlourish/
@@ -341,7 +335,91 @@ reFlourish/
 │   └── server.js                   # Server Entry Point
 └── README.md                       # This File
 ```
-## 🤝 Contributing
+### Key Files Explained
+#### Frontend Core Files
+- App.jsx: Main application with state management, mobile responsiveness, and analysis logic
+- MapComponent.jsx: Interactive Leaflet map with Geoman drawing tools and analysis triggers
+- AuthProvider.jsx: Context provider for authentication state across the app
+- useAuth.js: Custom hook for accessing authentication context
+
+#### Backend Core Files
+- server.js: Express server setup with analysis algorithms and external API integrations
+- Analysis.js: MongoDB schema for storing analysis results with geospatial data
+- auth.js: JWT middleware for protecting routes and validating tokens
+- database.js: MongoDB connection configuration with error handling
+
+<h2 id="scientific-methodology">🔬 Scientific Methodology</h2>
+
+### Suitability Analysis Algorithm
+The platform uses a sophisticated weighted scoring system:
+
+```javascript
+calculateWeightedScore(factors) {
+  const weights = {
+    vegetation: 0.4,    // Most important - existing ecosystem health
+    soil: 0.3,         // Soil composition and nutrients
+    rainfall: 0.2,     // Water availability
+    biodiversity: 0.1  // Existing ecosystem complexity
+  };
+  
+  return (
+    factors.vegetation * weights.vegetation +
+    factors.soil * weights.soil +
+    factors.rainfall * weights.rainfall +
+    factors.biodiversity * weights.biodiversity
+  );
+}
+```
+
+### Priority Level Classification
+- HIGH: ≥ 0.7 - Excellent restoration potential
+- MEDIUM: 0.5 - 0.69 - Good potential with some limitations
+- LOW: 0.3 - 0.49 - Challenging but possible with intervention
+- VERY_LOW: < 0.3 - Significant barriers to restoration
+
+### Impact Projection Models
+All calculations are based on peer-reviewed scientific research:
+
+#### Carbon Sequestration
+
+```javascript
+// IPCC: Temperate forests sequester 2.5-7.5 tons CO₂/ha/year
+const carbonPerHa = 5; // Average for mixed vegetation
+const co2Sequestration = areaHectares * score * carbonPerHa;
+```
+#### Water Retention
+
+```javascript
+// USDA: Healthy vegetation increases water retention by 500-2000 m³/ha/year
+const waterPerHa = 1000; // Middle of range
+const waterRetention = areaHectares * score * waterPerHa;
+```
+
+#### Biodiversity Gain
+
+```javascript
+// Ecological studies: Habitat quality improves biodiversity index
+const baseBiodiversityPotential = 35; // Max improvement
+const areaFactor = Math.log10(areaHectares + 1) / 2; // Logarithmic scaling
+const biodiversityGain = baseBiodiversityPotential * score * (1 + areaFactor);
+```
+
+#### Economic Valuation
+
+```javascript
+// TEEB: Ecosystem services valued at $500-5000/ha/year
+const economicPerHa = 500; // Conservative estimate
+const economicValue = areaHectares * score * economicPerHa;
+```
+
+### Data Sources and Credibility
+- Vegetation Health: Real NDVI data from Sentinel-2 via OpenEO
+- Soil Quality: Land cover classification from OpenEO with elevation factors
+- Rainfall Patterns: Historical weather data from Open-Meteo (2023 data)
+- Biodiversity: Habitat heterogeneity analysis from OpenEO
+- Elevation: Terrain data from Open-Meteo Elevation API
+
+<h2 id="contributing">🤝 Contributing</h2>
 
 I welcome contributions from the community! Here's how you can help:
 
@@ -389,7 +467,7 @@ git push origin feature/amazing-feature
 - Additional scientific models
 - Documentation improvements
 
-## 📄 License
+<h2 id="license">📄 License</h2>
 
 This project is licensed under the MIT License - see the [LICENSE](https://license/) file for details.
 
