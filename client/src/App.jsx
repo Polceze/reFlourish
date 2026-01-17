@@ -30,7 +30,7 @@ function App() {
 
     checkTouchDevice();
 
-    // Optional: Re-check on resize in case of device rotation
+    // Re-check on resize in case of device rotation
     window.addEventListener("resize", checkTouchDevice);
     return () => window.removeEventListener("resize", checkTouchDevice);
   }, []);

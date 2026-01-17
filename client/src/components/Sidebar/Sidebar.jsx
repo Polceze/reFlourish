@@ -1,5 +1,5 @@
-import React from 'react';
-import { Leaf, Map, BarChart3 } from 'lucide-react';
+import React from "react";
+import { Leaf, Map, BarChart3 } from "lucide-react";
 
 const Sidebar = () => {
   return (
@@ -12,7 +12,9 @@ const Sidebar = () => {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">ReFlourish</h1>
-            <p className="text-sm text-gray-600">Ecosystem Restoration Platform</p>
+            <p className="text-sm text-gray-600">
+              Ecosystem Restoration Platform
+            </p>
           </div>
         </div>
       </div>
@@ -31,13 +33,14 @@ const Sidebar = () => {
         </nav>
       </div>
 
-      {/* Analysis Panel - Empty for now */}
+      {/* Analysis Panel */}
       <div className="flex-1 p-6">
         <div className="text-center text-gray-500 mt-8">
           <Map className="w-12 h-12 mx-auto mb-4 opacity-50" />
           <h3 className="font-medium mb-2">Select an Area</h3>
           <p className="text-sm">
-            Draw a bounding box on the map to analyze ecosystem restoration potential
+            Draw a bounding box on the map to analyze ecosystem restoration
+            potential
           </p>
         </div>
       </div>

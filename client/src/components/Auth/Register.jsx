@@ -1,38 +1,38 @@
-import React, { useState } from 'react';
-import { useAuth } from '../../hooks/useAuth'; // Update import path
+import React, { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 const Register = ({ onSwitchToLogin, onClose }) => {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    organization: '',
-    role: 'user'
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    organization: "",
+    role: "user",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
-    setError('');
+    setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       return;
     }
 
     if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long');
+      setError("Password must be at least 6 characters long");
       return;
     }
 
@@ -41,13 +41,13 @@ const Register = ({ onSwitchToLogin, onClose }) => {
     // Remove confirmPassword from the data sent to the server
     const { ...registerData } = formData;
     const result = await register(registerData);
-    
+
     if (result.success) {
       onClose?.();
     } else {
       setError(result.error);
     }
-    
+
     setLoading(false);
   };
 
@@ -58,11 +58,7 @@ const Register = ({ onSwitchToLogin, onClose }) => {
         <p>Join ReFlourish to save your analyses</p>
       </div>
 
-      {error && (
-        <div className="auth-error">
-          {error}
-        </div>
-      )}
+      {error && <div className="auth-error">{error}</div>}
 
       <form onSubmit={handleSubmit} className="auth-form">
         <div className="form-group">
@@ -143,20 +139,16 @@ const Register = ({ onSwitchToLogin, onClose }) => {
           />
         </div>
 
-        <button 
-          type="submit" 
-          className="auth-button"
-          disabled={loading}
-        >
-          {loading ? 'Creating Account...' : 'Create Account'}
+        <button type="submit" className="auth-button" disabled={loading}>
+          {loading ? "Creating Account..." : "Create Account"}
         </button>
       </form>
 
       <div className="auth-footer">
         <p>
-          Already have an account?{' '}
-          <button 
-            type="button" 
+          Already have an account?{" "}
+          <button
+            type="button"
             className="auth-switch-button"
             onClick={onSwitchToLogin}
           >
