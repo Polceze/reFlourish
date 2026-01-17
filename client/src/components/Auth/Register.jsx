@@ -55,7 +55,6 @@ const Register = ({ onSwitchToLogin, onClose }) => {
     <div className="auth-modal">
       <div className="auth-header">
         <h2>Create Account</h2>
-        <p>Join ReFlourish to save your analyses</p>
       </div>
 
       {error && <div className="auth-error">{error}</div>}

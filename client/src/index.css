@@ -1038,7 +1038,7 @@ body,
 
 .auth-header p {
   margin: 0;
-  color: #6b7280;
+  color: #2b2b2c;
   font-size: 14px;
 }
 
@@ -1117,7 +1117,7 @@ body,
 
 .auth-footer p {
   margin: 0;
-  color: #6b7280;
+  color: #1e1e1f;
   font-size: 14px;
 }
 
@@ -1375,8 +1375,11 @@ body,
 }
 
 .auth-required-screen {
-  height: 100%;
-  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  min-height: 100vh;
+  background-image: url("./assets/reFlourish_hero.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1388,8 +1391,18 @@ body,
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10rem;
+  gap: 6rem;
   align-items: center;
+
+  padding: 40px;
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
 }
 
 .auth-hero {
