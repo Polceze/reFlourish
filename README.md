@@ -7,29 +7,34 @@
 ![Node.js](https://img.shields.io/badge/Node.js-Express-339933)
 
 ## 🌐 Live Site
+
 https://reflourish.netlify.app/
 
 ## 📖 Table of Contents
-- [🎯 Overview](#overview)
-- [✨ Features](#features)
-- [🛠 Tech Stack](#tech-stack)
-- [🏗 Architecture](#architecture)
-- [📡 API Documentation](#api-documentation)
-- [📁 Directory Structure](#directory-structure)
-- [🔬 Scientific Methodology](#scientific-methodology)
-- [🤝 Contributing](#contributing)
-- [📄 License](#license)
 
-<h2 id="overview">🎯 Overview</h2> 
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Quick Start](#quick-start)
+- [Architecture](#architecture)
+- [API Documentation](#api-documentation)
+- [Directory Structure](#directory-structure)
+- [Scientific Methodology](#scientific-methodology)
+- [Contributing](#contributing)
+- [License](#license)
+
+<h2 id="overview">Overview</h2>
 
 reFlourish is a comprehensive ecosystem restoration platform that enables users to analyze land suitability for reforestation and ecosystem restoration projects. The platform combines satellite imagery, environmental data, and scientific models to provide actionable insights for conservation efforts.
 
-### 🏆 Hackathon Context
+### Hackathon Context
+
 Built for Land Degradation hackathons, reFlourish addresses the critical need for data-driven ecosystem restoration planning in the face of climate change and biodiversity loss.
 
-<h2 id="features">✨ Features</h2>
+<h2 id="features">Features</h2>
 
-### 🌍 Core Functionality
+### Core Functionality
+
 - **Interactive Map Analysis**: Draw rectangular areas on the map to analyze ecosystem restoration potential
 - **Real Environmental Data**: Integration with OpenEO (Sentinel-2) and Open-Meteo APIs
 - **Multi-factor Analysis**: Vegetation health, soil quality, rainfall patterns, and biodiversity
@@ -38,25 +43,28 @@ Built for Land Degradation hackathons, reFlourish addresses the critical need fo
 - **Analysis History**: Save and revisit previous analyses
 - **Responsive Design**: Mobile-friendly interface with touch support and collapsible sidebar
 
-### 📊 Analysis Metrics
+### Analysis Metrics
+
 - **Greening Potential Score**: Overall suitability percentage (0-100%)
 - **Priority Levels**: HIGH, MEDIUM, LOW, VERY_LOW classifications
-- **Environmental Factors**: 
+- **Environmental Factors**:
   - Vegetation Health (NDVI from Sentinel-2) - 40% weight
   - Soil Quality (Land cover classification) - 30% weight
   - Rainfall Patterns (Historical weather data) - 20% weight
   - Biodiversity Index (Habitat heterogeneity) - 10% weight
 
-### 🔧 Technical Features
+### Technical Features
+
 - Real-time data processing from satellite and weather APIs
 - Scientific impact calculations based on peer-reviewed models
 - Secure RESTful API architecture with JWT authentication
 - Progressive Web App capabilities
 - Mobile-responsive design with touch gesture support
 
-<h2 id="tech-stack">🛠 Tech Stack</h2>
+<h2 id="tech-stack">Tech Stack</h2>
 
 ### Frontend
+
 - **React 19.1.1** - Modern UI framework with hooks
 - **Vite 7.1.7** - Fast build tool and dev server
 - **Leaflet 1.9.4** + **React-Leaflet 5.0.0** - Interactive maps
@@ -65,6 +73,7 @@ Built for Land Degradation hackathons, reFlourish addresses the critical need fo
 - **Axios** - HTTP client for API calls
 
 ### Backend
+
 - **Node.js** + **Express 5.1.0** - Runtime and web framework
 - **MongoDB** + **Mongoose 8.19.1** - Database and ODM
 - **JWT 9.0.2** - Authentication tokens
@@ -72,25 +81,106 @@ Built for Land Degradation hackathons, reFlourish addresses the critical need fo
 - **CORS 2.8.5** - Cross-origin resource sharing
 
 ### APIs & External Services
+
 - **OpenEO API** - Satellite imagery and environmental data (Sentinel-2)
 - **Open-Meteo API** - Weather, climate, and elevation data
 - **Sentinel-2** - European satellite imagery via OpenEO
 
 ### Development Tools
+
 - **ESLint 9.36.0** - Code linting and quality
 - **Nodemon 3.1.10** - Development server auto-restart
 - **dotenv 17.2.3** - Environment variable management
 
-<h2 id="architecture">🏗 Architecture</h2>
+<h2 id="quick-start">Quick Start</h2>
+
+This project uses a standard **MERN** setup with separate frontend and backend services. Follow the steps below to run reFlourish locally.
+
+#### Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js (v18 or higher recommended)
+- npm or yarn
+- MongoDB (local instance or MongoDB Atlas account)
+- Git
+
+#### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Polceze/reflourish.git
+cd reflourish
+```
+
+#### 2. Backend Setup
+
+```bash
+cd server
+npm install
+```
+
+Create a .env file inside the server directory:
+
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+NODE_ENV=development
+```
+
+Start the backend server:
+
+```bash
+npm run dev
+```
+
+The API should now be running at:
+
+```arduino
+http://localhost:5000
+```
+
+You can verify this by visiting:
+
+```bash
+http://localhost:5000/api/health
+```
+
+#### 3. Frontend Setup
+
+Open a new terminal window:
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+The frontend will start at:
+
+```arduino
+http://localhost:5173
+```
+
+#### 4. Using the Application
+
+- Open the app in your browser
+- Create an account and log in
+- On the app UI, draw a rectangular area on the map to run an ecosystem analysis
+- View suitability scores and impact projections instantly
+- Optional: save your analyses and revisit later
+
+<h2 id="architecture">Architecture</h2>
 
 ### System Architecture
+
 Client (React/Vite) → Express API → MongoDB
 ↓
 External APIs
 (OpenEO, Open-Meteo)
 
-
 ### Data Flow
+
 1. **User Interaction**: User draws area on map using Geoman tools
 2. **Data Collection**: Coordinates sent to `/api/analyze` endpoint
 3. **External API Calls**: Backend fetches real environmental data from OpenEO and Open-Meteo
@@ -108,7 +198,9 @@ Context Provider
 Authenticated API Calls with Bearer Token
 
 ### Database Models
+
 **User Model**
+
 - username (unique, required)
 - email (unique, required)
 - password (hashed, required)
@@ -117,6 +209,7 @@ Authenticated API Calls with Bearer Token
 - createdAt (auto-generated)
 
 **Analysis Model**
+
 - userId (reference to User)
 - coordinates (with bounds, center, NE/SW points)
 - analysisResults (scores, priority level, detailed factors)
@@ -124,10 +217,12 @@ Authenticated API Calls with Bearer Token
 - timestamp (auto-generated)
 - tags and isPublic for future features
 
-<h2 id="api-documentation">📡 API Documentation</h2>
+<h2 id="api-documentation">API Documentation</h2>
 
 ### Authentication Endpoints
+
 #### POST `/api/auth/register`
+
 - Register a new user account.
 
 Request Body:
@@ -159,6 +254,7 @@ Response:
 ```
 
 #### POST `/api/auth/login`
+
 - Authenticate user and return JWT token.
 
 Request Body:
@@ -173,6 +269,7 @@ Request Body:
 **Response:** Same as register endpoint.
 
 #### GET `/api/auth/me`
+
 - Get current user profile (requires Authorization header).
 
 Headers:
@@ -180,9 +277,11 @@ Headers:
 ```text
 Authorization: Bearer <jwt_token>
 ```
+
 ### Analysis Endpoints
 
 #### POST `/api/analyze`
+
 - Perform ecosystem analysis on selected area. No authentication required.
 
 Request Body:
@@ -191,9 +290,12 @@ Request Body:
 {
   "coordinates": {
     "northEast": { "lat": 40.712, "lng": -74.006 },
-    "southWest": { "lat": 40.710, "lng": -74.008 },
+    "southWest": { "lat": 40.71, "lng": -74.008 },
     "center": { "lat": 40.711, "lng": -74.007 },
-    "bounds": [[40.710, -74.008], [40.712, -74.006]]
+    "bounds": [
+      [40.71, -74.008],
+      [40.712, -74.006]
+    ]
   }
 }
 ```
@@ -203,7 +305,9 @@ Response:
 ```json
 {
   "success": true,
-  "area": { /* original coordinates */ },
+  "area": {
+    /* original coordinates */
+  },
   "analysis": {
     "overallScore": 0.75,
     "priorityLevel": "HIGH",
@@ -240,6 +344,7 @@ Response:
 ```
 
 #### POST `/api/analyses`
+
 - Save analysis to user history (requires authentication).
 
 Headers:
@@ -250,6 +355,7 @@ Content-Type: application/json
 ```
 
 #### GET /api/analyses/history
+
 - Get user's analysis history (requires authentication).
 
 **Request Body:** Same as analysis response structure.
@@ -262,11 +368,15 @@ Response:
   "analyses": [
     {
       "id": "507f1f77bcf86cd799439012",
-      "coordinates": { /* ... */ },
+      "coordinates": {
+        /* ... */
+      },
       "overallScore": 0.75,
       "priorityLevel": "HIGH",
       "areaSize": 4.52,
-      "impact": { /* ... */ },
+      "impact": {
+        /* ... */
+      },
       "timestamp": "2024-01-15T10:30:00.000Z"
     }
   ]
@@ -274,17 +384,20 @@ Response:
 ```
 
 #### GET `/api/analyses/:id`
+
 - Get specific analysis details (requires authentication).
 
 ### Utility Endpoints
 
 ### GET `/`
+
 - API welcome message and endpoint list.
 
 #### GET `/api/health`
+
 - Server health check.
 
-<h2 id="directory-structure">📁 Directory Structure</h2>
+<h2 id="directory-structure">Directory Structure</h2>
 
 ```text
 reFlourish/
@@ -335,22 +448,27 @@ reFlourish/
 │   └── server.js                   # Server Entry Point
 └── README.md                       # This File
 ```
+
 ### Key Files Explained
+
 #### Frontend Core Files
+
 - App.jsx: Main application with state management, mobile responsiveness, and analysis logic
 - MapComponent.jsx: Interactive Leaflet map with Geoman drawing tools and analysis triggers
 - AuthProvider.jsx: Context provider for authentication state across the app
 - useAuth.js: Custom hook for accessing authentication context
 
 #### Backend Core Files
+
 - server.js: Express server setup with analysis algorithms and external API integrations
 - Analysis.js: MongoDB schema for storing analysis results with geospatial data
 - auth.js: JWT middleware for protecting routes and validating tokens
 - database.js: MongoDB connection configuration with error handling
 
-<h2 id="scientific-methodology">🔬 Scientific Methodology</h2>
+<h2 id="scientific-methodology">Scientific Methodology</h2>
 
 ### Suitability Analysis Algorithm
+
 The platform uses a sophisticated weighted scoring system:
 
 ```javascript
@@ -361,7 +479,7 @@ calculateWeightedScore(factors) {
     rainfall: 0.2,     // Water availability
     biodiversity: 0.1  // Existing ecosystem complexity
   };
-  
+
   return (
     factors.vegetation * weights.vegetation +
     factors.soil * weights.soil +
@@ -372,12 +490,14 @@ calculateWeightedScore(factors) {
 ```
 
 ### Priority Level Classification
+
 - HIGH: ≥ 0.7 - Excellent restoration potential
 - MEDIUM: 0.5 - 0.69 - Good potential with some limitations
 - LOW: 0.3 - 0.49 - Challenging but possible with intervention
 - VERY_LOW: < 0.3 - Significant barriers to restoration
 
 ### Impact Projection Models
+
 All calculations are based on peer-reviewed scientific research:
 
 #### Carbon Sequestration
@@ -387,6 +507,7 @@ All calculations are based on peer-reviewed scientific research:
 const carbonPerHa = 5; // Average for mixed vegetation
 const co2Sequestration = areaHectares * score * carbonPerHa;
 ```
+
 #### Water Retention
 
 ```javascript
@@ -413,13 +534,14 @@ const economicValue = areaHectares * score * economicPerHa;
 ```
 
 ### Data Sources and Credibility
+
 - Vegetation Health: Real NDVI data from Sentinel-2 via OpenEO
 - Soil Quality: Land cover classification from OpenEO with elevation factors
 - Rainfall Patterns: Historical weather data from Open-Meteo (2023 data)
 - Biodiversity: Habitat heterogeneity analysis from OpenEO
 - Elevation: Terrain data from Open-Meteo Elevation API
 
-<h2 id="contributing">🤝 Contributing</h2>
+<h2 id="contributing">Contributing</h2>
 
 I welcome contributions from the community! Here's how you can help:
 
@@ -433,6 +555,7 @@ cd reflourish
 ```
 
 #### 2. Create a Feature Branch
+
 ```bash
 git checkout -b feature/amazing-feature
 ```
@@ -444,6 +567,7 @@ git checkout -b feature/amazing-feature
 - Test thoroughly
 
 #### 4. Commit Your Changes
+
 ```bash
 git commit -m 'feat: Add amazing feature'
 ```
@@ -453,7 +577,9 @@ git commit -m 'feat: Add amazing feature'
 ```bash
 git push origin feature/amazing-feature
 ```
+
 ### Code Standards
+
 - Use ESLint for code quality
 - Follow React best practices and hooks rules
 - Write meaningful commit messages
@@ -461,17 +587,18 @@ git push origin feature/amazing-feature
 - Test on multiple devices for responsiveness
 
 ### Areas for Contribution
+
 - Additional environmental data sources
 - Enhanced visualization features
 - Mobile app development
 - Additional scientific models
 - Documentation improvements
 
-<h2 id="license">📄 License</h2>
+<h2 id="license">License</h2>
 
 This project is licensed under the MIT License - see the [LICENSE](https://license/) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - OpenEO for providing satellite imagery and environmental data processing
 - Open-Meteo for free weather and climate API services
@@ -480,12 +607,10 @@ This project is licensed under the MIT License - see the [LICENSE](https://licen
 - MongoDB for database services
 - The scientific community for ecological research that made this possible
 
-
-
 <div align="center">
 
 Built with ❤️ for a Greener Planet
 
-*"The best time to plant a tree was 20 years ago. The second best time is now." - Chinese Proverb*
+_"The best time to plant a tree was 20 years ago. The second best time is now." - Chinese Proverb_
 
-</div> 
+</div>

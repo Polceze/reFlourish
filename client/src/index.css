@@ -4,9 +4,12 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .app {
@@ -18,7 +21,7 @@ html, body, #root {
 .sidebar {
   width: 320px;
   background: white;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
 }
@@ -260,7 +263,7 @@ html, body, #root {
 .instructions-card,
 .analysis-card,
 .placeholder-card {
-  background: white;
+  background: #bcdaca;
   border-radius: 12px;
   padding: 10px;
   margin-bottom: 16px;
@@ -274,14 +277,14 @@ html, body, #root {
   gap: 12px;
   margin-bottom: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid black;
 }
 
 .card-header h3 {
   margin: 0;
   font-size: 18px;
   font-weight: 600;
-  color: #1f2937;
+  color: black;
   flex: 1;
 }
 
@@ -407,7 +410,7 @@ html, body, #root {
   font-size: 15px;
   font-weight: 800;
   color: #1f2937;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
   background: #f8fafc;
   padding: 4px 8px;
   border-radius: 8px;
@@ -468,7 +471,7 @@ html, body, #root {
 .placeholder-card p {
   margin: 0;
   font-size: 14px;
-  color: #6b7280;
+  color: black;
   line-height: 1.5;
 }
 
@@ -525,7 +528,8 @@ html, body, #root {
 }
 
 .priority-badge,
-.potential-badge {  /* Add both for compatibility */
+.potential-badge {
+  /* Add both for compatibility */
   display: inline-flex;
   align-items: center;
   justify-content: space-evenly;
@@ -650,8 +654,12 @@ html, body, #root {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-section p {
@@ -1333,12 +1341,12 @@ html, body, #root {
 }
 
 .logout-button {
-  background: #b67e77;
+  background: #c55e5e;
   color: white;
 }
 
 .logout-button:hover {
-  background: #d17979;
+  background: #c73a3a;
 }
 
 /* Protected Route Styles */
@@ -1527,13 +1535,13 @@ html, body, #root {
   }
 
   .feature-list {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
   }
 
-  .welcome-header{
+  .welcome-header {
     flex-direction: column;
     align-items: center;
     text-align: center;
