@@ -29,7 +29,7 @@ reFlourish is a comprehensive ecosystem restoration platform that enables users 
 
 ### Hackathon Context
 
-Built for Land Degradation hackathons, reFlourish addresses the critical need for data-driven ecosystem restoration planning in the face of climate change and biodiversity loss.
+Built for a Land Degradation hackathon, reFlourish addresses the critical need for data-driven ecosystem restoration planning in the face of climate change and biodiversity loss.
 
 <h2 id="features">Features</h2>
 

@@ -24,11 +24,13 @@ const ProtectedRoute = ({ children }) => {
           <div className="welcome-section">
             <div className="welcome-header">
               <h1>ReFlourish</h1>
-              <p className="welcome-subtitle">Ecosystem Enhancement Platform</p>
+              <p className="welcome-subtitle">
+                Comprehensive ecosystem restoration platform
+              </p>
             </div>
 
             <div className="feature-list">
-              <h2>Transform Ecosystems with Data</h2>
+              <h2></h2>
               <div className="feature-grid">
                 <div className="feature-card">
                   <div>
@@ -75,10 +77,7 @@ const ProtectedRoute = ({ children }) => {
             </div>
 
             <div className="demo-notice">
-              <p>
-                Transform your ecosystem restoration with satellite-powered
-                insights
-              </p>
+              <p>Data-driven analysis for reforestation projects</p>
             </div>
           </div>
         </div>

@@ -1386,6 +1386,13 @@ body,
   padding: 20px;
 }
 
+.auth-required-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(66, 66, 66, 0.15);
+}
+
 .auth-required-content {
   max-width: 900px;
   width: 100%;
